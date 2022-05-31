@@ -1,12 +1,10 @@
+using SeaMasters.Models;
+
 namespace SeaMasters;
 
 public interface IGameManager
 {
     Player[] PrepareGame(string player1Name, string player2Name);
-    List<MoveData> RunTurn();
-
-    //List<MoveData> StartAutoGame();
-    Player StartAutoGame();
-
+    List<PlayersRaport> RunTurn();
     HashSet<Coordinates> GetNeighbours(int x, int y);
 }

@@ -1,13 +1,16 @@
+using SeaMasters.Consts;
+using SeaMasters.Models;
+
 namespace SeaMasters;
 
 public class Player
 {
     public string Name { get; }
-    public Board PlayerBoard { get; set; }
-    public ShootingBoard PlayerShootingBoard { get; set; }
-    public List<Ship> Ships { get; set; }
+    public Board PlayerBoard { get; }
+    public ShootingBoard PlayerShootingBoard { get; }
+    public List<Ship> Ships { get; }
 
-    public ShotGenerator ShotGenerator { get; set; }
+    public ShotGenerator ShotGenerator { get;}
 
     private Coordinates LastShot { get; set; }
 
@@ -21,11 +24,11 @@ public class Player
         Name = argName;
         Ships = new List<Ship>()
         {
-            new Ship(5),
-            new Ship(4),
-            new Ship(3),
-            new Ship(3),
-            new Ship(2)
+            new Ship(Settings.SHIP_CARRIER),
+            new Ship(Settings.SHIP_BATTLESHIP),
+            new Ship(Settings.SHIP_SUBMARINE),
+            new Ship(Settings.SHIP_SUBMARINE),
+            new Ship(Settings.SHIP_DESTROYER)
         };
         PlayerBoard = new Board(Ships);
         PlayerShootingBoard = new ShootingBoard();

@@ -1,15 +1,17 @@
-namespace SeaMasters;
+using SeaMasters.Consts;
+
+namespace SeaMasters.Models;
 
 public class Coordinates
 {
-    public static Coordinates Up = new Coordinates(0, 1);
-    public static Coordinates Down = new Coordinates(0, -1);
-    public static Coordinates Right = new Coordinates(1, 0);
-    public static Coordinates Left = new Coordinates(-1, 0);
-    public static Coordinates UpRight = new Coordinates(1, 1);
-    public static Coordinates UpLeft = new Coordinates(-1, 1);
-    public static Coordinates DownRight = new Coordinates(1, -1);
-    public static Coordinates DownLeft = new Coordinates(-1, -1);
+    public static readonly Coordinates Up = new Coordinates(0, 1);
+    public static readonly Coordinates Down = new Coordinates(0, -1);
+    public static readonly Coordinates Right = new Coordinates(1, 0);
+    public static readonly Coordinates Left = new Coordinates(-1, 0);
+    public static readonly Coordinates UpRight = new Coordinates(1, 1);
+    public static readonly Coordinates UpLeft = new Coordinates(-1, 1);
+    public static readonly Coordinates DownRight = new Coordinates(1, -1);
+    public static readonly Coordinates DownLeft = new Coordinates(-1, -1);
     public int X { get; }
     public int Y { get; }
 
@@ -41,9 +43,9 @@ public class Coordinates
     {
         unchecked
         {
-            int hash = 17;
-            hash = hash * 23 + X.GetHashCode();
-            hash = hash * 23 + Y.GetHashCode();
+            int hash = Settings.HASH_PRIME_NUMBER_FIRST;
+            hash = hash * Settings.HASH_PRIME_NUMBER_SEC + X.GetHashCode();
+            hash = hash * Settings.HASH_PRIME_NUMBER_SEC + Y.GetHashCode();
             return hash;
         }
     }

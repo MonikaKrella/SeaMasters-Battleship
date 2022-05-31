@@ -45,17 +45,10 @@ namespace SeaMasters.Controllers
         }
 
         [HttpGet("run-turn")]
-        public async Task<ActionResult<List<MoveData>>> StartGame()
+        public async Task<ActionResult<List<PlayersRaport>>> StartGame()
         {
             var raport = gameManager.RunTurn();
             return raport;
-        }
-        
-        [HttpGet("start/auto")]
-        public async Task<ActionResult<Player>> StartAutoGame()
-        {
-            var sth = gameManager.StartAutoGame();
-            return sth;
         }
     }
 }

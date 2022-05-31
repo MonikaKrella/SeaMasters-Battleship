@@ -1,13 +1,11 @@
-using SeaMasters;
-
-namespace SeaMasters;
+namespace SeaMasters.Models;
 
 public class Ship
 {
-    public int Length { get; set; }
+    public int Length { get; }
     
     public List<Coordinates> Position { get; set; }
-    public List<Coordinates> DestroyedParts { get; set; }
+    public List<Coordinates> DestroyedParts { get; }
     
     public bool IsDestroyed
     {

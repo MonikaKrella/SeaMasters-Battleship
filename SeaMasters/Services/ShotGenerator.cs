@@ -1,3 +1,5 @@
+using SeaMasters.Models;
+
 namespace SeaMasters;
 
 public class ShotGenerator

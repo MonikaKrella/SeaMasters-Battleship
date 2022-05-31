@@ -1,15 +1,17 @@
-namespace SeaMasters;
+using SeaMasters.Consts;
+
+namespace SeaMasters.Models;
 
 public class ShootingBoard
 {
-    public FieldStateType[][] ShootingArea { get; set; }
+    public FieldStateType[][] ShootingArea { get; }
     
     public ShootingBoard()
     {
-        ShootingArea = new FieldStateType[10][];
+        ShootingArea = new FieldStateType[Settings.BOARD_DIMENSION][];
         for (int i = 0; i < ShootingArea.Length; i++)
         {
-            ShootingArea[i] = new FieldStateType[10];
+            ShootingArea[i] = new FieldStateType[Settings.BOARD_DIMENSION];
         }
     }
 

@@ -1,4 +1,5 @@
 using SeaMasters;
+using SeaMasters.Models;
 
 namespace SeaMasters;
 
