@@ -1,7 +1,7 @@
-namespace SeaMasters;
+namespace SeaMasters.Models.ClientData;
 
 public class CreatePlayersDTO
 {
-    public string name1 { get; set; }
-    public string name2 { get; set; }
+    public string FirstPlayerName { get; set; }
+    public string SecondPlayerName { get; set; }
 }

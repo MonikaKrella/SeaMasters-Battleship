@@ -1,4 +1,5 @@
 using SeaMasters.Consts;
+using SeaMasters.Enums;
 
 namespace SeaMasters.Models;
 
@@ -8,10 +9,10 @@ public class ShootingBoard
     
     public ShootingBoard()
     {
-        ShootingArea = new FieldStateType[Settings.BOARD_DIMENSION][];
+        ShootingArea = new FieldStateType[GameSettings.BOARD_DIMENSION][];
         for (int i = 0; i < ShootingArea.Length; i++)
         {
-            ShootingArea[i] = new FieldStateType[Settings.BOARD_DIMENSION];
+            ShootingArea[i] = new FieldStateType[GameSettings.BOARD_DIMENSION];
         }
     }
 

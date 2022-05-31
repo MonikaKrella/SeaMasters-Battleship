@@ -1,10 +1,7 @@
-using SeaMasters.Models;
-
-namespace SeaMasters;
+namespace SeaMasters.Interfaces;
 
 public interface IGameManager
 {
-    Player[] PrepareGame(string player1Name, string player2Name);
-    List<PlayersRaport> RunTurn();
-    HashSet<Coordinates> GetNeighbours(int x, int y);
+    Player[] PrepareGame(string firstPlayerName, string secondPlayerName);
+    List<TurnReport> RunTurn();
 }

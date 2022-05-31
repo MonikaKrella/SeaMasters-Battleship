@@ -1,4 +1,5 @@
 using SeaMasters.Consts;
+using SeaMasters.Enums;
 using SeaMasters.Models;
 
 namespace SeaMasters;
@@ -10,47 +11,43 @@ public class Player
     public ShootingBoard PlayerShootingBoard { get; }
     public List<Ship> Ships { get; }
 
-    public ShotGenerator ShotGenerator { get;}
+    private readonly ShotGenerator shotGenerator;
+    private Coordinates lastShot;
 
-    private Coordinates LastShot { get; set; }
-
-    public bool HasLost
-    {
-        get { return Ships.All(ship => ship.IsDestroyed); }
-    }
+    public bool HasLost => Ships.All(ship => ship.IsDestroyed);
 
     public Player(string argName)
     {
         Name = argName;
         Ships = new List<Ship>()
         {
-            new Ship(Settings.SHIP_CARRIER),
-            new Ship(Settings.SHIP_BATTLESHIP),
-            new Ship(Settings.SHIP_SUBMARINE),
-            new Ship(Settings.SHIP_SUBMARINE),
-            new Ship(Settings.SHIP_DESTROYER)
+            new (GameSettings.SHIP_CARRIER_LENGTH),
+            new (GameSettings.SHIP_BATTLESHIP_LENGTH),
+            new (GameSettings.SHIP_SUBMARINE_LENGTH),
+            new (GameSettings.SHIP_SUBMARINE_LENGTH),
+            new (GameSettings.SHIP_DESTROYER_LENGTH)
         };
         PlayerBoard = new Board(Ships);
         PlayerShootingBoard = new ShootingBoard();
-        ShotGenerator = new ShotGenerator(PlayerShootingBoard);
+        shotGenerator = new ShotGenerator(PlayerShootingBoard);
     }
 
-    public void SetShips()
+    public void SetShipsPositionsRandomly()
     {
-        PlayerBoard.SetShips();
+        PlayerBoard.SetShipsPositionsRandomly();
     }
 
     public Coordinates MakeAShot()
     {
-        Coordinates shot = ShotGenerator.RandomShot();
-        LastShot = shot;
+        Coordinates shot = shotGenerator.RandomShot();
+        lastShot = shot;
         return shot;
     }
 
     public Coordinates MakeExtraShot()
     {
-        Coordinates shot = ShotGenerator.SearchingShot(LastShot);
-        LastShot = shot;
+        Coordinates shot = shotGenerator.SearchingShot(lastShot);
+        lastShot = shot;
         return shot;
     }
 
@@ -71,8 +68,8 @@ public class Player
     {
         if (isShipDestroyed)
         {
-            var additionaFields = PlayerShootingBoard.UpdateAfterDestruction(shot);
-            return additionaFields;
+            var additionalFields = PlayerShootingBoard.UpdateAfterDestruction(shot);
+            return additionalFields;
         }
 
         PlayerShootingBoard.UpdateField(shot, shotResult);

@@ -1,68 +1,57 @@
-using SeaMasters.Models;
+using SeaMasters.Enums;
+using SeaMasters.Interfaces;
 
 namespace SeaMasters;
 
 public class BotGameManager : IGameManager
 {
-    private Random random = new Random();
-    private Player AttackingPlayer { get; set; }
-
-    private Player DefendingPlayer { get; set; }
-
-    private Player[] Players { get; set; }
-
-    public Player[] PrepareGame(string player1Name, string player2Name)
+    private Player attackingPlayer;
+    private Player defendingPlayer;
+    private Player[] players;
+    
+    public Player[] PrepareGame(string firstPlayerName, string secondPlayerName)
     {
-        Player[] players = { new Player(player1Name), new Player(player2Name) };
+        players = new []{ new Player(firstPlayerName), new Player(secondPlayerName) };
         foreach (var player in players)
         {
-            player.SetShips();
+            player.SetShipsPositionsRandomly();
         }
 
-        Players = players;
-        
-        int firstPlayerIndex = random.Next(0, 2);
-        AttackingPlayer = Players[firstPlayerIndex];
-        DefendingPlayer = firstPlayerIndex == 0 ? Players[1] : Players[0];
+        int startingPlayerIndex = RandomGenerator.GetPlayerIndex();
+        attackingPlayer = players[startingPlayerIndex];
+        defendingPlayer = startingPlayerIndex == 0 ? players[1] : players[0];
 
         return players;
     }
 
-    public List<PlayersRaport> RunTurn()
+    public List<TurnReport> RunTurn()
     {
-        List<PlayersRaport> playersRaports = new List<PlayersRaport>();
+        List<TurnReport> playersReports = new List<TurnReport>();
 
-        var shot = AttackingPlayer.MakeAShot();
-        var (shotResult, isShipDestroyed) = DefendingPlayer.CheckEnemyShot(shot);
-        var additionalFields =  AttackingPlayer.UpdateShootingBoard(shot, shotResult, isShipDestroyed);
-        playersRaports.Add(new PlayersRaport(AttackingPlayer, isShipDestroyed, DefendingPlayer.HasLost, DefendingPlayer.PlayerShootingBoard));
-        if (shotResult == FieldStateType.Hit && !DefendingPlayer.HasLost)
+        var shot = attackingPlayer.MakeAShot();
+        var (shotResult, isShipDestroyed) = defendingPlayer.CheckEnemyShot(shot);
+        var additionalFields =  attackingPlayer.UpdateShootingBoard(shot, shotResult, isShipDestroyed);
+        playersReports.Add(new TurnReport(attackingPlayer, isShipDestroyed, defendingPlayer.HasLost, defendingPlayer.PlayerShootingBoard));
+        if (shotResult == FieldStateType.Hit && !defendingPlayer.HasLost)
         {
             FieldStateType extrashotResult;
            do
            {
-               var extraShot = isShipDestroyed ? AttackingPlayer.MakeAShot() : AttackingPlayer.MakeExtraShot();
-               (extrashotResult, isShipDestroyed) = DefendingPlayer.CheckEnemyShot(extraShot);
-               additionalFields = AttackingPlayer.UpdateShootingBoard(extraShot, extrashotResult, isShipDestroyed);
-                playersRaports.Add(new PlayersRaport(AttackingPlayer, isShipDestroyed, DefendingPlayer.HasLost, DefendingPlayer.PlayerShootingBoard));
-           } while (extrashotResult == FieldStateType.Hit && !DefendingPlayer.HasLost);
+               var extraShot = isShipDestroyed ? attackingPlayer.MakeAShot() : attackingPlayer.MakeExtraShot();
+               (extrashotResult, isShipDestroyed) = defendingPlayer.CheckEnemyShot(extraShot);
+               additionalFields = attackingPlayer.UpdateShootingBoard(extraShot, extrashotResult, isShipDestroyed);
+                playersReports.Add(new TurnReport(attackingPlayer, isShipDestroyed, defendingPlayer.HasLost, defendingPlayer.PlayerShootingBoard));
+           } while (extrashotResult == FieldStateType.Hit && !defendingPlayer.HasLost);
         }
 
-        if (DefendingPlayer.HasLost)
+        if (defendingPlayer.HasLost)
         {
-            return playersRaports;
+            return playersReports;
         }
 
-        (AttackingPlayer, DefendingPlayer) = (DefendingPlayer, AttackingPlayer);
+        (attackingPlayer, defendingPlayer) = (defendingPlayer, attackingPlayer);
 
-        return playersRaports;
+        return playersReports;
     }
-
-    public HashSet<Coordinates> GetNeighbours(int x, int y)
-    {
-        var neighbours = AdjacentFieldsHelper.FindAdjacentFields(new Coordinates(x, y));
-        return neighbours;
-    }
-
 
 }

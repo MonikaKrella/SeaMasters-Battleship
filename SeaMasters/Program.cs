@@ -1,5 +1,6 @@
 using Newtonsoft.Json.Serialization;
 using SeaMasters;
+using SeaMasters.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

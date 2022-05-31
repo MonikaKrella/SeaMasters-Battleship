@@ -2,14 +2,14 @@ using SeaMasters.Models;
 
 namespace SeaMasters;
 
-public class PlayersRaport
+public class TurnReport
 {
     public Player ActivePlayer { get; }
     public bool IsEnemyShipDestroyed { get; }
     public bool HasEnemyLost { get; }
     public ShootingBoard DefendingPlayerShootingBoard { get; }
 
-    public PlayersRaport(
+    public TurnReport(
         Player argActivePlayer,
         bool argIsEnemyShipDestroyed,
         bool argHasEnemyLost,

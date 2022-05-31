@@ -1,3 +1,4 @@
+using SeaMasters.Enums;
 using SeaMasters.Models;
 
 namespace SeaMasters;

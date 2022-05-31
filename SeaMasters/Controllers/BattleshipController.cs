@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SeaMasters.Interfaces;
+using SeaMasters.Models.ClientData;
 
 namespace SeaMasters.Controllers
 {
@@ -11,14 +13,13 @@ namespace SeaMasters.Controllers
     [ApiController]
     public class BattleshipController : ControllerBase
     {
-        private IGameManager gameManager;
-
-        private readonly ILogger<BattleshipController> _logger;
+        private readonly IGameManager gameManager;
+        private readonly ILogger<BattleshipController> logger;
 
         public BattleshipController(IGameManager argGameManager, ILogger<BattleshipController> argLogger)
         {
             gameManager = argGameManager;
-            _logger = argLogger;
+            logger = argLogger;
         }
 
         [HttpPost]
@@ -26,29 +27,30 @@ namespace SeaMasters.Controllers
         {
             try
             {
-                var players = gameManager.PrepareGame(playersDto.name1, playersDto.name2);
+                var players = gameManager.PrepareGame(playersDto.FirstPlayerName, playersDto.SecondPlayerName);
                 return players;
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
-                Console.WriteLine(e);
-                throw;
+                logger.LogError(e.Message);
+                return StatusCode(500);
             }
         }
 
-        [HttpPost("test")]
-        public JsonResult GetFieldsAround(int x, int y)
-        {
-            var neighbours = gameManager.GetNeighbours(x, y);
-            return new JsonResult(neighbours);
-        }
-
         [HttpGet("run-turn")]
-        public async Task<ActionResult<List<PlayersRaport>>> StartGame()
+        public async Task<ActionResult<List<TurnReport>>> StartGame()
         {
-            var raport = gameManager.RunTurn();
-            return raport;
+            try
+            {
+                var report = gameManager.RunTurn();
+                return report;
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e.Message);
+                return StatusCode(500);
+            }
+            
         }
     }
 }

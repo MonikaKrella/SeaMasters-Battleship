@@ -1,20 +1,19 @@
 using SeaMasters;
+using SeaMasters.Enums;
 using SeaMasters.Models;
 
 namespace SeaMasters;
 
 public class ShipLocationGenerator
 {
-    private Random random = new Random();
-
-    private Ship[][] ShipsArea { get;}
+    private readonly Ship[][] shipsArea;
 
     public ShipLocationGenerator(Ship[][] argShipsArea)
     {
-        ShipsArea = argShipsArea;
+        shipsArea = argShipsArea;
     }
 
-    public void SetShips(List<Ship> ships)
+    public void SetShipsPositionsRandomly(List<Ship> ships)
     {
         foreach (var ship in ships)
         {
@@ -28,8 +27,8 @@ public class ShipLocationGenerator
         do
         {
             Coordinates firstCoords = GenerateField();
-            bool isHorizontal = IsHorizontalDirection();
-            if (isHorizontal)
+            var direction = RandomGenerator.GetDirection();
+            if (direction == Direction.Horizontal)
             {
                 shipPosition = SetHorizontal(firstCoords, ship.Length);
             }
@@ -41,20 +40,10 @@ public class ShipLocationGenerator
 
         foreach (var coords in shipPosition)
         {
-            ShipsArea[coords.Y][coords.X] = ship;
+            shipsArea[coords.Y][coords.X] = ship;
         }
 
         ship.Position = shipPosition;
-    }
-
-    private bool IsHorizontalDirection()
-    {
-        if (random.Next(0, 2) == 1)
-        {
-            return true;
-        }
-
-        return false;
     }
 
     private Coordinates GenerateField()
@@ -63,7 +52,7 @@ public class ShipLocationGenerator
         do
         {
             Coordinates coords = RandomGenerator.GetRandomCoords();
-            if (ShipsArea[coords.Y][coords.X] == null)
+            if (shipsArea[coords.Y][coords.X] == null)
             {
                 HashSet<Coordinates> adjacentFields =
                     AdjacentFieldsHelper.FindAdjacentFields(new Coordinates(coords.X, coords.Y));
@@ -72,7 +61,7 @@ public class ShipLocationGenerator
 
                 foreach (var fieldCoords in adjacentFields)
                 {
-                    if (ShipsArea[fieldCoords.Y][fieldCoords.X] != null)
+                    if (shipsArea[fieldCoords.Y][fieldCoords.X] != null)
                     {
                         areNeighboursEmpty = false;
                         break;
@@ -101,7 +90,7 @@ public class ShipLocationGenerator
             newX += 1;
 
             Coordinates nextCoords;
-            if (newX < 10 && ShipsArea[newY][newX] == null)
+            if (newX < 10 && shipsArea[newY][newX] == null)
             {
                 var adjacentFields = AdjacentFieldsHelper.FindAdjacentFields(new Coordinates(newX, newY));
 
@@ -109,12 +98,14 @@ public class ShipLocationGenerator
 
                 foreach (var coords in adjacentFields)
                 {
-                    if (ShipsArea[coords.Y][coords.X] != null && ShipsArea[coords.Y][coords.X] != ShipsArea[prevShipPart.Y][prevShipPart.X])
+                    if (shipsArea[coords.Y][coords.X] != null &&
+                        shipsArea[coords.Y][coords.X] != shipsArea[prevShipPart.Y][prevShipPart.X])
                     {
                         areNeihboursEmpty = false;
-                        break;  
+                        break;
                     }
                 }
+
                 if (areNeihboursEmpty)
                 {
                     nextCoords = new Coordinates(newX, newY);
@@ -131,6 +122,7 @@ public class ShipLocationGenerator
                 break;
             }
         }
+
         return shipPosition;
     }
 
@@ -146,7 +138,7 @@ public class ShipLocationGenerator
             newY += 1;
             Coordinates nextCoords;
 
-            if (newY < 10 && ShipsArea[newY][newX] == null)
+            if (newY < 10 && shipsArea[newY][newX] == null)
             {
                 var adjacentFields = AdjacentFieldsHelper.FindAdjacentFields(new Coordinates(newX, newY));
 
@@ -154,12 +146,14 @@ public class ShipLocationGenerator
 
                 foreach (var coords in adjacentFields)
                 {
-                    if (ShipsArea[coords.Y][coords.X] != null && ShipsArea[coords.Y][coords.X] != ShipsArea[prevShipPart.Y][prevShipPart.X])
+                    if (shipsArea[coords.Y][coords.X] != null &&
+                        shipsArea[coords.Y][coords.X] != shipsArea[prevShipPart.Y][prevShipPart.X])
                     {
                         areNeihboursEmpty = false;
-                        break;  
+                        break;
                     }
                 }
+
                 if (areNeihboursEmpty)
                 {
                     nextCoords = new Coordinates(newX, newY);
@@ -176,6 +170,7 @@ public class ShipLocationGenerator
                 break;
             }
         }
+
         return shipPosition;
     }
 }
