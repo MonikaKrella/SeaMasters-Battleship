@@ -10,14 +10,14 @@ public class ShotGenerator
     {
         ShootingBoard = argShootingBoard;
     }
-    
-    
+
+
     public Coordinates RandomShot()
     {
         Coordinates shotCoords;
         do
         {
-            shotCoords = RandomGenerator.GetRandomCoords();  
+            shotCoords = RandomGenerator.GetRandomCoords();
         } while (ShootingBoard.ShootingArea[shotCoords.Y][shotCoords.X] != FieldStateType.Unknown);
 
         return shotCoords;
@@ -35,10 +35,12 @@ public class ShotGenerator
                 shotCoords = RandomGenerator.GetAdjacentCoords(previousShot);
                 checkedFields.Add(shotCoords);
             }
-
-            shotCoords = RandomGenerator.GetRandomCoords();
-
-        } while (ShootingBoard.ShootingArea[shotCoords.Y][shotCoords.X] != FieldStateType.Unknown && checkedFields.Count < adjacentFields.Count);
+            else
+            {
+                shotCoords = RandomGenerator.GetRandomCoords();
+            }
+        } while (ShootingBoard.ShootingArea[shotCoords.Y][shotCoords.X] != FieldStateType.Unknown &&
+                 checkedFields.Count < adjacentFields.Count);
 
         return shotCoords;
     }
