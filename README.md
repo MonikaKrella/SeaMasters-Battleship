@@ -4,8 +4,8 @@
 Your simulator of Battleship game!
 
 ## Project assumptions
-The game is projected to be fully independent in decision from fronted site. Any websie coud use simple API to run battleship. /
-It was written based on classical rules. The board has always 10x10 fields and set of ships is also always the same. /
+The game is projected to be fully independent in decision from fronted site. Any websie coud use simple API to run battleship. 
+It was written based on classical rules. The board has always 10x10 fields and set of ships is also always the same.
 If you want to see frontend part prepaired for this simulator, visit: https://github.com/MonikaKrella/SeaMastersFront
 
 ### Rules of ship positioning
@@ -21,7 +21,7 @@ If shot hits ship, acive player gets possibility to make extra shot. Every well-
 The big battle is won by this pirate, who first destroys all ships of enemy. At that moment game is finished.
 
 ### Different shooting algorithms
-The way of generating shots depends on situation in game. If it is first shot of current player, it make a shot randomly. /
+The way of generating shots depends on situation in game. If it is first shot of current player, it make a shot randomly.
 However if first shot hitted other player ship, attacking player makes "searching shot" in closest neighbours of field, where ship was hitten.
 
 # Screenshots
