@@ -28,26 +28,14 @@ public class BotGameManager : IGameManager
     {
         List<TurnReport> playersReports = new List<TurnReport>();
 
-        var shot = attackingPlayer.MakeAShot();
-        var (shotResult, isShipDestroyed) = defendingPlayer.CheckEnemyShot(shot);
-        var additionalFields =  attackingPlayer.UpdateShootingBoard(shot, shotResult, isShipDestroyed);
-        playersReports.Add(new TurnReport(attackingPlayer, isShipDestroyed, defendingPlayer.HasLost, defendingPlayer.PlayerShootingBoard));
-        if (shotResult == FieldStateType.Hit && !defendingPlayer.HasLost)
+        FieldStateType shotResult;
+        do
         {
-            FieldStateType extrashotResult;
-           do
-           {
-               var extraShot = isShipDestroyed ? attackingPlayer.MakeAShot() : attackingPlayer.MakeExtraShot();
-               (extrashotResult, isShipDestroyed) = defendingPlayer.CheckEnemyShot(extraShot);
-               additionalFields = attackingPlayer.UpdateShootingBoard(extraShot, extrashotResult, isShipDestroyed);
-                playersReports.Add(new TurnReport(attackingPlayer, isShipDestroyed, defendingPlayer.HasLost, defendingPlayer.PlayerShootingBoard));
-           } while (extrashotResult == FieldStateType.Hit && !defendingPlayer.HasLost);
-        }
-
-        if (defendingPlayer.HasLost)
-        {
-            return playersReports;
-        }
+            var shot = attackingPlayer.MakeAShot();
+            (shotResult, var isShipDestroyed) = defendingPlayer.CheckEnemyShot(shot);
+            attackingPlayer.UpdateShootingBoard(shot, shotResult, isShipDestroyed);
+            playersReports.Add(new TurnReport(attackingPlayer, isShipDestroyed, defendingPlayer.HasLost, defendingPlayer.PlayerShootingBoard));
+        } while (shotResult == FieldStateType.Hit && !defendingPlayer.HasLost);
 
         (attackingPlayer, defendingPlayer) = (defendingPlayer, attackingPlayer);
 

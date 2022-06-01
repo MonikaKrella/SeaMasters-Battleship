@@ -29,13 +29,13 @@ public class ShootingBoard
         ShootingArea[field.Y][field.X] = FieldStateType.Hit;
         destroyedShipParts.Add(field);
 
-        DistributeNeighbours(field, emptyFieldsAroundShip, destroyedShipParts);
+        FindNeighboursAroundShip(field, emptyFieldsAroundShip, destroyedShipParts);
 
         
         return emptyFieldsAroundShip;
     }
 
-    private void DistributeNeighbours(Coordinates currField, HashSet<Coordinates> emptyFieldsAroundShip, HashSet<Coordinates> destroyedShipParts )
+    private void FindNeighboursAroundShip(Coordinates currField, HashSet<Coordinates> emptyFieldsAroundShip, HashSet<Coordinates> destroyedShipParts )
     {
         HashSet<Coordinates> adjacentFields = AdjacentFieldsHelper.FindAdjacentFields(currField);
         foreach (var neighbourdCoords in adjacentFields)
@@ -45,7 +45,7 @@ public class ShootingBoard
                 bool isNewAdded = destroyedShipParts.Add(neighbourdCoords);
                 if (isNewAdded)
                 {
-                    DistributeNeighbours(neighbourdCoords, emptyFieldsAroundShip, destroyedShipParts);
+                    FindNeighboursAroundShip(neighbourdCoords, emptyFieldsAroundShip, destroyedShipParts);
                 }
             }
             else

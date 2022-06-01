@@ -21,11 +21,11 @@ public class Player
         Name = argName;
         Ships = new List<Ship>()
         {
-            new (GameSettings.SHIP_CARRIER_LENGTH),
-            new (GameSettings.SHIP_BATTLESHIP_LENGTH),
-            new (GameSettings.SHIP_SUBMARINE_LENGTH),
-            new (GameSettings.SHIP_SUBMARINE_LENGTH),
-            new (GameSettings.SHIP_DESTROYER_LENGTH)
+            new(GameSettings.SHIP_CARRIER_LENGTH),
+            new(GameSettings.SHIP_BATTLESHIP_LENGTH),
+            new(GameSettings.SHIP_SUBMARINE_LENGTH),
+            new(GameSettings.SHIP_SUBMARINE_LENGTH),
+            new(GameSettings.SHIP_DESTROYER_LENGTH)
         };
         PlayerBoard = new Board(Ships);
         PlayerShootingBoard = new ShootingBoard();
@@ -39,19 +39,21 @@ public class Player
 
     public Coordinates MakeAShot()
     {
-        Coordinates shot = shotGenerator.RandomShot();
+        Coordinates shot;
+        if (lastShot == null || PlayerShootingBoard.ShootingArea[lastShot.Y][lastShot.X] != FieldStateType.Hit)
+        {
+            shot = shotGenerator.RandomShot();
+        }
+        else
+        {
+            shot = shotGenerator.SearchingShot(lastShot);
+        }
+
         lastShot = shot;
         return shot;
     }
 
-    public Coordinates MakeExtraShot()
-    {
-        Coordinates shot = shotGenerator.SearchingShot(lastShot);
-        lastShot = shot;
-        return shot;
-    }
-
-    public (FieldStateType shootedFieldState , bool isShipDestroyed) CheckEnemyShot(Coordinates enemyShot)
+    public (FieldStateType shootedFieldState, bool isShipDestroyed) CheckEnemyShot(Coordinates enemyShot)
     {
         if (PlayerBoard.ShipsArea[enemyShot.Y][enemyShot.X] == null)
         {
@@ -63,16 +65,18 @@ public class Player
         return (FieldStateType.Hit, hittedShip.IsDestroyed);
     }
 
-    public HashSet<Coordinates> UpdateShootingBoard(Coordinates shot, FieldStateType shotResult,
+    public void UpdateShootingBoard(Coordinates shot, FieldStateType shotResult,
         bool isShipDestroyed)
     {
         if (isShipDestroyed)
         {
-            var additionalFields = PlayerShootingBoard.UpdateAfterDestruction(shot);
-            return additionalFields;
+            var emptyFieldsAroundShip = PlayerShootingBoard.UpdateAfterDestruction(shot);
+            foreach (var coords in emptyFieldsAroundShip)
+            {
+                PlayerShootingBoard.UpdateField(coords, FieldStateType.Miss);
+            }
         }
 
         PlayerShootingBoard.UpdateField(shot, shotResult);
-        return null;
     }
 }
