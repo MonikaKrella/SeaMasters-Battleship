@@ -24,6 +24,9 @@ The big battle is won by this pirate, who first destroys all ships of enemy. At 
 The way of generating shots depends on situation in game. If it is first shot of current player, it make a shot randomly.
 However if first shot hitted other player ship, attacking player makes "searching shot" in closest neighbours of field, where ship was hitten.
 
+## Technical issues
+Data from server are avaiable by simple API, with two endpoinds for creating game and making one's player turn. It's using single game manager for all clients and storing their games by games' id, which is necessary for getting data about every turn.
+
 # Screenshots
 
 ### Swagger:
