@@ -9,6 +9,4 @@ public static class GameSettings
     public const int SHIP_BATTLESHIP_LENGTH = 4;
     public const int SHIP_SUBMARINE_LENGTH = 3;
     public const int SHIP_DESTROYER_LENGTH = 2;
-    public const int HASH_PRIME_NUMBER_FIRST = 17;
-    public const int HASH_PRIME_NUMBER_SEC = 23;
 }

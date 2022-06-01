@@ -1,5 +1,6 @@
 using SeaMasters.Consts;
 using SeaMasters.Models;
+using SeaMasters.Services;
 
 namespace SeaMasters;
 

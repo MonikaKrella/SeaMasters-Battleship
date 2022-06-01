@@ -2,7 +2,7 @@ using SeaMasters.Consts;
 using SeaMasters.Enums;
 using SeaMasters.Models;
 
-namespace SeaMasters;
+namespace SeaMasters.Services;
 
 public class RandomGenerator
 {

@@ -1,8 +1,7 @@
-using SeaMasters;
 using SeaMasters.Enums;
 using SeaMasters.Models;
 
-namespace SeaMasters;
+namespace SeaMasters.Services;
 
 public class ShipLocationGenerator
 {
@@ -23,10 +22,10 @@ public class ShipLocationGenerator
 
     private void CreateShipPosition(Ship ship)
     {
-        List<Coordinates> shipPosition = new List<Coordinates>();
+        List<Coordinates> shipPosition;
         do
         {
-            Coordinates firstCoords = GenerateField();
+            var firstCoords = GenerateField();
             var direction = RandomGenerator.GetDirection();
             shipPosition = GenerateShipPosition(firstCoords, ship.Length, direction);
         } while (shipPosition.Count < ship.Length);
@@ -36,7 +35,7 @@ public class ShipLocationGenerator
             shipsArea[coords.Y][coords.X] = ship;
         }
 
-        ship.Position = shipPosition;
+        ship.SetPosition(shipPosition);
     }
 
     private Coordinates GenerateField()
@@ -73,11 +72,11 @@ public class ShipLocationGenerator
 
     private List<Coordinates> GenerateShipPosition(Coordinates firstCoords, int shipLength, Direction shipDirection)
     {
-        int newX = firstCoords.X;
-        int newY = firstCoords.Y;
-        List<Coordinates> shipPosition = new List<Coordinates>();
+        var newX = firstCoords.X;
+        var newY = firstCoords.Y;
+        var shipPosition = new List<Coordinates>();
         shipPosition.Add(firstCoords);
-        Coordinates prevShipPart = firstCoords;
+        var prevShipPartCoords = firstCoords;
         for (int i = 1; i < shipLength; i++)
         {
             if (shipDirection == Direction.Horizontal)
@@ -95,12 +94,12 @@ public class ShipLocationGenerator
             {
                 var adjacentFields = AdjacentFieldsHelper.FindAdjacentFields(new Coordinates(newX, newY));
 
-                bool areNeihboursEmpty = true;
+                var areNeihboursEmpty = true;
 
                 foreach (var coords in adjacentFields)
                 {
                     if (shipsArea[coords.Y][coords.X] != null &&
-                        shipsArea[coords.Y][coords.X] != shipsArea[prevShipPart.Y][prevShipPart.X])
+                        shipsArea[coords.Y][coords.X] != shipsArea[prevShipPartCoords.Y][prevShipPartCoords.X])
                     {
                         areNeihboursEmpty = false;
                         break;
@@ -110,7 +109,7 @@ public class ShipLocationGenerator
                 if (areNeihboursEmpty)
                 {
                     nextCoords = new Coordinates(newX, newY);
-                    prevShipPart = nextCoords;
+                    prevShipPartCoords = nextCoords;
                     shipPosition.Add(nextCoords);
                 }
                 else

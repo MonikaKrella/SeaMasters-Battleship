@@ -36,14 +36,15 @@ public class Coordinates
         
         return X == coords.X && Y == coords.Y;
     }
-
+    
+    // https://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-overriding-gethashcode
     public override int GetHashCode()
     {
         unchecked
         {
-            int hash = GameSettings.HASH_PRIME_NUMBER_FIRST;
-            hash = hash * GameSettings.HASH_PRIME_NUMBER_SEC + X.GetHashCode();
-            hash = hash * GameSettings.HASH_PRIME_NUMBER_SEC + Y.GetHashCode();
+            int hash = MathConsts.HASH_PRIME_NUMBER_FIRST;
+            hash = hash * MathConsts.HASH_PRIME_NUMBER_SEC + X.GetHashCode();
+            hash = hash * MathConsts.HASH_PRIME_NUMBER_SEC + Y.GetHashCode();
             return hash;
         }
     }

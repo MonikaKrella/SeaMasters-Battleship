@@ -1,18 +1,18 @@
 using SeaMasters.Enums;
 using SeaMasters.Models;
+using SeaMasters.Services;
 
 namespace SeaMasters;
 
 public class ShotGenerator
 {
-    public ShootingBoard ShootingBoard { get; set; }
+    public ShootingBoard ShootingBoard { get; }
 
     public ShotGenerator(ShootingBoard argShootingBoard)
     {
         ShootingBoard = argShootingBoard;
     }
-
-
+    
     public Coordinates RandomShot()
     {
         Coordinates shotCoords;

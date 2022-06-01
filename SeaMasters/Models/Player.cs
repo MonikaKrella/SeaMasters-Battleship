@@ -61,7 +61,7 @@ public class Player
         }
 
         Ship hittedShip = PlayerBoard.ShipsArea[enemyShot.Y][enemyShot.X];
-        hittedShip.DestroyedParts.Add(new Coordinates(enemyShot.X, enemyShot.Y));
+        hittedShip.AddDestroyedPart(new Coordinates(enemyShot.X, enemyShot.Y));
         return (FieldStateType.Hit, hittedShip.IsDestroyed);
     }
 

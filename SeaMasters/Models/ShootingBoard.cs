@@ -1,5 +1,6 @@
 using SeaMasters.Consts;
 using SeaMasters.Enums;
+using SeaMasters.Services;
 
 namespace SeaMasters.Models;
 
@@ -38,19 +39,19 @@ public class ShootingBoard
     private void FindNeighboursAroundShip(Coordinates currField, HashSet<Coordinates> emptyFieldsAroundShip, HashSet<Coordinates> destroyedShipParts )
     {
         HashSet<Coordinates> adjacentFields = AdjacentFieldsHelper.FindAdjacentFields(currField);
-        foreach (var neighbourdCoords in adjacentFields)
+        foreach (var neighbourCoords in adjacentFields)
         {
-            if (ShootingArea[neighbourdCoords.Y][neighbourdCoords.X] == FieldStateType.Hit)
+            if (ShootingArea[neighbourCoords.Y][neighbourCoords.X] == FieldStateType.Hit)
             {
-                bool isNewAdded = destroyedShipParts.Add(neighbourdCoords);
+                bool isNewAdded = destroyedShipParts.Add(neighbourCoords);
                 if (isNewAdded)
                 {
-                    FindNeighboursAroundShip(neighbourdCoords, emptyFieldsAroundShip, destroyedShipParts);
+                    FindNeighboursAroundShip(neighbourCoords, emptyFieldsAroundShip, destroyedShipParts);
                 }
             }
             else
             {
-                emptyFieldsAroundShip.Add(neighbourdCoords);
+                emptyFieldsAroundShip.Add(neighbourCoords);
             }
         }
     }

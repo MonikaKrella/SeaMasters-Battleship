@@ -1,5 +1,6 @@
 using SeaMasters.Enums;
 using SeaMasters.Interfaces;
+using SeaMasters.Services;
 
 namespace SeaMasters;
 

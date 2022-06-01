@@ -1,6 +1,6 @@
 using SeaMasters.Models;
 
-namespace SeaMasters;
+namespace SeaMasters.Services;
 
 public static class AdjacentFieldsHelper
 {
