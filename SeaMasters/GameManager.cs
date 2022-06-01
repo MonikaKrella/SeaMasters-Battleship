@@ -6,11 +6,11 @@ namespace SeaMasters.Models;
 
 public class GameManager : IGameManager
 {
-    private readonly ConcurrentDictionary<string, Game> games = new();
+    private readonly ConcurrentDictionary<string, IGame> games = new();
 
     public InitialGameDTO PrepareGame(string firstPlayerName, string secondPlayerName)
     {
-        var newGame = new Game();
+        var newGame = new BotGame();
         var players = newGame.PrepareGame(firstPlayerName, secondPlayerName);
         var id = Guid.NewGuid().ToString();
         games.TryAdd(id, newGame);
