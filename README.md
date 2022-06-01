@@ -5,8 +5,7 @@ Your simulator of Battleship game!
 
 ## Project assumptions
 The game is projected to be fully independent in decision from fronted site. Any websie coud use simple API to run battleship. /
-It was written based on classical rules. The board has always 10x10 fields and set of ships is also always the same.
-![image](https://user-images.githubusercontent.com/92270179/171295595-dcc76065-f5a7-4b07-8814-30ec68d993f4.png) /
+It was written based on classical rules. The board has always 10x10 fields and set of ships is also always the same. /
 If you want to see frontend part prepaired for this simulator, visit: https://github.com/MonikaKrella/SeaMastersFront
 
 ### Rules of ship positioning
