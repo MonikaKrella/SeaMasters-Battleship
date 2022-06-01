@@ -34,7 +34,6 @@ The big battle is won by the pirate, who first destroys all enemies ships. At th
  - ASP.NET Core
  - .NET 6.0
  - C# 10.0
- - Newtonsoft.Json
 
 # Ideas for future
  - tests
