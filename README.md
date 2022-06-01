@@ -27,7 +27,7 @@ However if first shot hitted other player ship, attacking player makes "searchin
 # Screenshots
 
 ### Swagger:
-![image](https://user-images.githubusercontent.com/92270179/171296727-511c58a1-d10b-4122-864e-b5a7b06c79be.png)
+![image](https://user-images.githubusercontent.com/92270179/171396942-af19d192-794b-4c40-8abd-487c85f1be3a.png)
 ![image](https://user-images.githubusercontent.com/92270179/171296767-3a2de233-ac45-4d39-b70c-142f96f67618.png)
 
 ### Frontend:
