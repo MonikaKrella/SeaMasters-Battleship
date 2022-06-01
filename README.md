@@ -1,12 +1,22 @@
 ![seamlogo](https://user-images.githubusercontent.com/92270179/171294801-928f97ea-0a46-44bc-9d33-23662bb6741a.png)
 
 # SeaMasters-Battleship
-Your simulator of Battleship game!
+Your simulator of the Battleship game!
 
 ## Project assumptions
-The game is projected to be fully independent in decision from fronted site. Any websie coud use simple API to run battleship. 
-It was written based on classical rules. The board has always 10x10 fields and set of ships is also always the same.
+The game is designed in a way that server is fully responsible for executing game logic. Any website can use this API to run battleship. 
 If you want to see frontend part prepaired for this simulator, visit: https://github.com/MonikaKrella/SeaMastersFront
+
+### Technical issues
+ - Data from server is avaiable by simple API, with two endpoinds for creating game and making player's turn. 
+ - It's using a single game manager for all clients and storing their games by games' ids, which is necessary for getting data about every turn.
+
+### Different shooting algorithms
+The way of generating shots depends on situation in game. If it is first shot of current player, it make a shot randomly.
+However if first shot hitted other player ship, attacking player makes "searching shot" in closest neighbours of field, where ship was hitten.
+
+## Rules
+It was written based on classical rules. The board has always 10x10 fields and set of ships is also always the same.
 
 ### Rules of ship positioning
 Following the rules bot algorithm places ships with at least 1 empty field between them, in vertical and horizonal direction.
@@ -14,18 +24,16 @@ Following the rules bot algorithm places ships with at least 1 empty field betwe
 ### Rules of turns
 It is decided randomly which player will start a game. 
 At single turn player makes at least one shot. 
-If shot misses ship, active player just get that info, to put it at shooting board and roles are changing - second player become an attacking player.
-If shot hits ship, acive player gets possibility to make extra shot. Every well-aimed shot generates one more extra shot, until player missed.
+If shot misses, active player just get that info to put it at shooting board. Then roles are changing - second player becomes an attacking player.
+If shot is a hit, acive player gets possibility to make extra shot. Every well-aimed shot generates one more extra shot until player missed.
 
 ### Winning rules
-The big battle is won by this pirate, who first destroys all ships of enemy. At that moment game is finished.
+The big battle is won by the pirate, who first destroys all enemies ships. At that moment game is finished.
 
-### Different shooting algorithms
-The way of generating shots depends on situation in game. If it is first shot of current player, it make a shot randomly.
-However if first shot hitted other player ship, attacking player makes "searching shot" in closest neighbours of field, where ship was hitten.
-
-## Technical issues
-Data from server are avaiable by simple API, with two endpoinds for creating game and making one's player turn. It's using single game manager for all clients and storing their games by games' id, which is necessary for getting data about every turn.
+# Ideas for future
+ - tests
+ - mamanging player vs computer mode
+ - managing player vs player mode
 
 # Screenshots
 
