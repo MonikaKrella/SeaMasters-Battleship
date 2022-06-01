@@ -4,7 +4,7 @@ using SeaMasters.Services;
 
 namespace SeaMasters;
 
-public class Game : IGame
+public class BotGame : IGame
 {
     public bool IsGameOver => attackingPlayer.HasLost || defendingPlayer.HasLost;
 

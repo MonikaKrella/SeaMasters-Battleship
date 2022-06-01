@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Plugins;
 using SeaMasters.Interfaces;
 using SeaMasters.Models.ClientData;
 
@@ -38,7 +39,12 @@ namespace SeaMasters.Controllers
             try
             {
                 var report = gameManager.MakeTurn(gameId);
-                return report;
+                if (report != null)
+                {
+                    return report;
+                }
+
+                return NotFound("Not found game");
             }
             catch (Exception e)
             {
