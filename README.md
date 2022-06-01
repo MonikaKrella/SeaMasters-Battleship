@@ -48,4 +48,4 @@ The big battle is won by the pirate, who first destroys all enemies ships. At th
 ![image](https://user-images.githubusercontent.com/92270179/171296767-3a2de233-ac45-4d39-b70c-142f96f67618.png)
 
 ### Frontend:
-![image](https://user-images.githubusercontent.com/92270179/171294866-75120e4f-dffd-43ea-ba94-d884e47fc44d.png)
+![image](https://user-images.githubusercontent.com/92270179/171473387-4a06f0a2-7e43-4584-9d91-a561aed4d5d5.png)
