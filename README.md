@@ -30,6 +30,11 @@ If shot is a hit, acive player gets possibility to make extra shot. Every well-a
 ### Winning rules
 The big battle is won by the pirate, who first destroys all enemies ships. At that moment game is finished.
 
+# Tech stack
+ - ASP.NET 6
+ - .NET 10
+ - Newtonsoft.Json
+
 # Ideas for future
  - tests
  - mamanging player vs computer mode
