@@ -1,7 +1,9 @@
+using SeaMasters.Models.ClientData;
+
 namespace SeaMasters.Interfaces;
 
 public interface IGameManager
 {
-    Player[] PrepareGame(string firstPlayerName, string secondPlayerName);
-    List<TurnReport> RunTurn();
+    InitialGameDTO PrepareGame(string firstPlayerName, string secondPlayerName);
+    List<TurnReport> MakeTurn(string id);
 }

@@ -18,12 +18,12 @@ namespace SeaMasters.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Player[]>> PrepareGame([FromBody]CreatePlayersDTO playersDto)
+        public async Task<ActionResult<InitialGameDTO>> PrepareGame([FromBody]CreatePlayersDTO playersDto)
         {
             try
             {
-                var players = gameManager.PrepareGame(playersDto.FirstPlayerName, playersDto.SecondPlayerName);
-                return players;
+                var initialGameData = gameManager.PrepareGame(playersDto.FirstPlayerName, playersDto.SecondPlayerName);
+                return initialGameData;
             }
             catch (Exception e)
             {
@@ -32,12 +32,12 @@ namespace SeaMasters.Controllers
             }
         }
 
-        [HttpGet("run-turn")]
-        public async Task<ActionResult<List<TurnReport>>> StartGame()
+        [HttpPost("run-turn")]
+        public async Task<ActionResult<List<TurnReport>>> RunTurn([FromBody] string gameId)
         {
             try
             {
-                var report = gameManager.RunTurn();
+                var report = gameManager.MakeTurn(gameId);
                 return report;
             }
             catch (Exception e)
