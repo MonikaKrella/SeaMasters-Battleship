@@ -1,26 +1,30 @@
+using SeaMasters.Consts;
+using SeaMasters.Models;
+using SeaMasters.Services;
+
 namespace SeaMasters;
 
 public class Board
 {
-    public List<Ship> Ships { get; set; }
-    public Ship[][] ShipsArea { get; set; }
+    public Ship[][] ShipsArea { get; }
     
-    private ShipLocationGenerator shipLocationGenerator;
+    private readonly List<Ship> Ships;
+    private readonly ShipLocationGenerator shipLocationGenerator;
+
     public Board(List<Ship> argShips)
     {
         Ships = argShips;
-        ShipsArea = new Ship[10][];
+        ShipsArea = new Ship[GameSettings.BOARD_DIMENSION][];
         for (int i = 0; i < ShipsArea.Length; i++)
         {
-            ShipsArea[i] = new Ship[10];
+            ShipsArea[i] = new Ship[GameSettings.BOARD_DIMENSION];
         }
 
         shipLocationGenerator = new ShipLocationGenerator(ShipsArea);
-
     }
 
-    public void SetShips()
+    public void SetShipsPositionsRandomly()
     {
-        shipLocationGenerator.SetShips(Ships);
-    } 
+        shipLocationGenerator.SetShipsPositionsRandomly(Ships);
+    }
 }

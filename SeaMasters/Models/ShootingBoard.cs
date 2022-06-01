@@ -1,15 +1,19 @@
-namespace SeaMasters;
+using SeaMasters.Consts;
+using SeaMasters.Enums;
+using SeaMasters.Services;
+
+namespace SeaMasters.Models;
 
 public class ShootingBoard
 {
-    public FieldStateType[][] ShootingArea { get; set; }
+    public FieldStateType[][] ShootingArea { get; }
     
     public ShootingBoard()
     {
-        ShootingArea = new FieldStateType[10][];
+        ShootingArea = new FieldStateType[GameSettings.BOARD_DIMENSION][];
         for (int i = 0; i < ShootingArea.Length; i++)
         {
-            ShootingArea[i] = new FieldStateType[10];
+            ShootingArea[i] = new FieldStateType[GameSettings.BOARD_DIMENSION];
         }
     }
 
@@ -26,28 +30,28 @@ public class ShootingBoard
         ShootingArea[field.Y][field.X] = FieldStateType.Hit;
         destroyedShipParts.Add(field);
 
-        DistributeNeighbours(field, emptyFieldsAroundShip, destroyedShipParts);
+        FindNeighboursAroundShip(field, emptyFieldsAroundShip, destroyedShipParts);
 
         
         return emptyFieldsAroundShip;
     }
 
-    private void DistributeNeighbours(Coordinates currField, HashSet<Coordinates> emptyFieldsAroundShip, HashSet<Coordinates> destroyedShipParts )
+    private void FindNeighboursAroundShip(Coordinates currField, HashSet<Coordinates> emptyFieldsAroundShip, HashSet<Coordinates> destroyedShipParts )
     {
         HashSet<Coordinates> adjacentFields = AdjacentFieldsHelper.FindAdjacentFields(currField);
-        foreach (var neighbourdCoords in adjacentFields)
+        foreach (var neighbourCoords in adjacentFields)
         {
-            if (ShootingArea[neighbourdCoords.Y][neighbourdCoords.X] == FieldStateType.Hit)
+            if (ShootingArea[neighbourCoords.Y][neighbourCoords.X] == FieldStateType.Hit)
             {
-                bool isNewAdded = destroyedShipParts.Add(neighbourdCoords);
+                bool isNewAdded = destroyedShipParts.Add(neighbourCoords);
                 if (isNewAdded)
                 {
-                    DistributeNeighbours(neighbourdCoords, emptyFieldsAroundShip, destroyedShipParts);
+                    FindNeighboursAroundShip(neighbourCoords, emptyFieldsAroundShip, destroyedShipParts);
                 }
             }
             else
             {
-                emptyFieldsAroundShip.Add(neighbourdCoords);
+                emptyFieldsAroundShip.Add(neighbourCoords);
             }
         }
     }

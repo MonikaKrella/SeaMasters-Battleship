@@ -1,4 +1,6 @@
-namespace SeaMasters;
+using SeaMasters.Models;
+
+namespace SeaMasters.Services;
 
 public static class AdjacentFieldsHelper
 {
