@@ -4,7 +4,7 @@
 Your simulator of the Battleship game!
 
 ## Project assumptions
-The game is designed in a way that server is fully responsible for executing game logic. Any website can use this API to run battleship. 
+The game is designed in a way that server is fully responsible for executing game logic, including logic of bots. Any website can use this API to run battleship. 
 If you want to see frontend part prepaired for this simulator, visit: https://github.com/MonikaKrella/SeaMastersFront
 
 ### Technical issues
@@ -31,8 +31,8 @@ If shot is a hit, acive player gets possibility to make extra shot. Every well-a
 The big battle is won by the pirate, who first destroys all enemies ships. At that moment game is finished.
 
 # Tech stack
- - ASP.NET 6
- - .NET 10
+ - ASP.NET 6.0
+ - C# 10.0
  - Newtonsoft.Json
 
 # Ideas for future
