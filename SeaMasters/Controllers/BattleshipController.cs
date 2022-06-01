@@ -32,8 +32,8 @@ namespace SeaMasters.Controllers
             }
         }
 
-        [HttpPost("run-turn")]
-        public async Task<ActionResult<List<TurnReport>>> RunTurn([FromBody] string gameId)
+        [HttpGet("run-turn")]
+        public async Task<ActionResult<List<TurnReport>>> RunTurn(string gameId)
         {
             try
             {
