@@ -36,7 +36,7 @@ The big battle is won by the pirate, who first destroys all enemies ships. At th
  - C# 10.0
 
 # Ideas for future
- - tests
+ - tests (waiting in pull request)
  - mamanging player vs computer mode
  - managing player vs player mode
 
